@@ -70,6 +70,7 @@ class CGameContext : public IGameServer
 
 	bool m_Resetting;
 public:
+	bool gCTF;
 	IServer *Server() const { return m_pServer; }
 	class IConsole *Console() { return m_pConsole; }
 	CCollision *Collision() { return &m_Collision; }

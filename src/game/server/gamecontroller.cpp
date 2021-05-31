@@ -342,7 +342,7 @@ void IGameController::OnCharacterSpawn(class CCharacter *pChr)
 
 	// give default weapons
 	pChr->GiveWeapon(WEAPON_HAMMER, -1);
-	pChr->GiveWeapon(WEAPON_GUN, 10);
+	pChr->GiveWeapon(WEAPON_GRENADE, g_Config.m_SvGrenadeAmmo);
 }
 
 void IGameController::DoWarmup(int Seconds)
@@ -436,6 +436,10 @@ void IGameController::Tick()
 		if(!m_UnpauseTimer)
 			GameServer()->m_World.m_Paused = false;
 	}
+
+	// Grenade should have everytime more than 3 bullets
+	if(g_Config.m_SvGrenadeAmmo < 4)
+		g_Config.m_SvGrenadeAmmo = -1;
 
 	// game is Paused
 	if(GameServer()->m_World.m_Paused)
