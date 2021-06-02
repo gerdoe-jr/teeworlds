@@ -6,7 +6,7 @@
 CGameControllerGCTF::CGameControllerGCTF(class CGameContext *pGameServer) : CGameControllerCTF(pGameServer)
 {
 	m_pGameType = "gCTF+";
-	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_TEAMS;
+	m_GameFlags = GAMEFLAG_TEAMS|GAMEFLAG_FLAGS;
 }
 
 void CGameControllerGCTF::OnCharacterSpawn(CCharacter* pChr)
