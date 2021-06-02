@@ -700,9 +700,13 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 	if(GameServer()->m_pController->IsFriendlyFire(m_pPlayer->GetCID(), From) && !g_Config.m_SvTeamdamage)
 		return false;
 
+	if (From == m_pPlayer->GetCID() && m_pPlayer->GetCharacter()->IsGrounded() && g_Config.m_SvGrenadeAmmo > 0)
+		m_pPlayer->GetCharacter()->m_aWeapons[WEAPON_GRENADE].m_Ammo++;
+
 	// m_pPlayer only inflicts half damage on self
 	if (From == m_pPlayer->GetCID())
 		return true;
+
 
 	m_DamageTaken++;
 
@@ -718,30 +722,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 		GameServer()->CreateDamageInd(m_Pos, 0, Dmg);
 	}
 
-	if(Dmg)
-	{
-		if(m_Armor)
-		{
-			if(Dmg > 1)
-			{
-				m_Health--;
-				Dmg--;
-			}
-
-			if(Dmg > m_Armor)
-			{
-				Dmg -= m_Armor;
-				m_Armor = 0;
-			}
-			else
-			{
-				m_Armor -= Dmg;
-				Dmg = 0;
-			}
-		}
-
-		m_Health -= Dmg;
-	}
+	m_pPlayer->GetCharacter()->Die(From, Weapon);
 
 	m_DamageTakenTick = Server()->Tick();
 
