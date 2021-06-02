@@ -23,6 +23,5 @@ if(NOT DPP_FOUND)
 
   include(FindPackageHandleStandardArgs)
   find_package_handle_standard_args(DPP DEFAULT_MSG DPP_INCLUDEDIR)
-
   set(DPP_BUNDLED ON)
 endif()

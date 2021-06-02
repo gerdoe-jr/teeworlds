@@ -67,6 +67,7 @@ else()
   set(TARGET_ARCH)
 endif()
 
+
 set(AUTO_DEPENDENCIES_DEFAULT OFF)
 if(TARGET_OS STREQUAL "windows")
   set(AUTO_DEPENDENCIES_DEFAULT ON)
@@ -260,6 +261,7 @@ find_package(Pnglite)
 find_package(PythonInterp)
 find_package(SDL)
 find_package(Threads)
+#find_package(DPP)
 find_package(Wavpack)
 find_package(DPP REQUIRED)
 
@@ -306,6 +308,7 @@ show_dependency_status("OpenSSL Crypto" CRYPTO)
 show_dependency_status("Pnglite" PNGLITE)
 show_dependency_status("PythonInterp" PYTHONINTERP)
 show_dependency_status("SDL" SDL)
+#show_dependency_status("DPP" DPP)
 show_dependency_status("Wavpack" WAVPACK)
 show_dependency_status("Zlib" ZLIB)
 show_dependency_status("DPP" DPP)
@@ -774,11 +777,16 @@ set_glob(GAME_SERVER GLOB_RECURSE src/game/server
   player.cpp
   player.h
 )
+
+set_glob(SERVER_DPP GLOB other/dpp/include
+  ../../../src/game/server/discord/bot.cpp
+  ../../../src/game/server/discord/bot.h
+)
 set(GAME_GENERATED_SERVER
   "src/game/generated/server_data.cpp"
   "src/game/generated/server_data.h"
 )
-set(SERVER_SRC ${ENGINE_SERVER} ${GAME_SERVER} ${GAME_GENERATED_SERVER})
+set(SERVER_SRC ${ENGINE_SERVER} ${GAME_SERVER} ${GAME_GENERATED_SERVER} ${SERVER_DPP})
 if(TARGET_OS STREQUAL "windows")
   set(SERVER_ICON "other/icons/${SERVER_EXECUTABLE}.rc")
 else()

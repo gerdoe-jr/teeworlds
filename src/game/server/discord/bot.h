@@ -4,12 +4,17 @@
 #include <game/server/gamecontext.h>
 #include <dpp/dpp.h>
 
-class CDiscordBot {
-public:
-	CDiscordBot(CGamecontext* pGS);
-private:
-	CGameContext* m_pGS;
 
+class CDiscordBot
+{
+public:
+	std::string Token;
+    CDiscordBot(CGameContext *pGS);
+    void LogChat(int Team, std::string Nickname, std::string Message);
+    void LogEnter(std::string Nickname);
+    void LogExit(std::string Nickname);
+private:
+    CGameContext* m_pGS
 };
 
-#endif // !GAME_SERVER_DISCORD_BOT_H
+#endif
