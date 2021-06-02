@@ -15,6 +15,8 @@
 #include "gameworld.h"
 #include "player.h"
 
+#include "discord/bot.h"
+
 /*
 	Tick
 		Game Context (CGameContext::tick)
@@ -71,6 +73,10 @@ class CGameContext : public IGameServer
 	bool m_Resetting;
 public:
 	bool gCTF;
+	CDiscordBot* m_pBot;
+
+	CDiscordBot* Discord() const { return m_pDiscord; }
+
 	IServer *Server() const { return m_pServer; }
 	class IConsole *Console() { return m_pConsole; }
 	CCollision *Collision() { return &m_Collision; }
