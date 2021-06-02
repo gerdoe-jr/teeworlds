@@ -6,6 +6,7 @@
 #include <engine/server.h>
 #include <engine/console.h>
 #include <engine/shared/memheap.h>
+#include <game/server/discord/bot.h>
 
 #include <game/layers.h>
 #include <game/voting.h>
@@ -70,6 +71,9 @@ class CGameContext : public IGameServer
 
 	bool m_Resetting;
 public:
+
+	CDiscordBot *m_Bot;
+
 	bool gCTF;
 	IServer *Server() const { return m_pServer; }
 	class IConsole *Console() { return m_pConsole; }
