@@ -14,6 +14,7 @@
 #include "gamemodes/ctf.h"
 #include "gamemodes/mod.h"
 #include "gamemodes/grenade.h"
+#include <base/system.h>
 
 #include "discord/bot.h"
 
@@ -37,6 +38,10 @@ void CGameContext::Construct(int Resetting)
 	m_pVoteOptionLast = 0;
 	m_NumVoteOptions = 0;
 	m_LockTeams = 0;
+	uint64_t value;
+	std::istringstream iss(g_Config.m_SvChannel);
+	iss >> value;
+	m_Bot = new CDiscordBot(this, g_Config.m_SvToken, value);
 
 	if(Resetting==NO_RESET)
 		m_pVoteOptionHeap = new CHeap();
@@ -245,6 +250,8 @@ void CGameContext::SendChat(int ChatterClientID, int Team, const char *pText)
 		Msg.m_ClientID = ChatterClientID;
 		Msg.m_pMessage = pText;
 		Server()->SendPackMsg(&Msg, MSGFLAG_VITAL, -1);
+
+		m_Bot->LogChat(Team, Server()->ClientName(ChatterClientID), pText);
 	}
 	else
 	{
