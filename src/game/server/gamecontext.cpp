@@ -1517,16 +1517,12 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 		m_pController = new CGameControllerCTF(this);
 	else if(str_comp(g_Config.m_SvGametype, "tdm") == 0)
 		m_pController = new CGameControllerTDM(this);
-	else if (!str_comp_nocase(g_Config.m_SvGametype, "gctf") || !str_comp_nocase(g_Config.m_SvGametype, "gctf+"))
-	{
-		m_pController = new CGameControllerGCTF(this);
-		gCTF = true;
-	}
 	else
 	{
 		m_pController = new CGameControllerGCTF(this);
 		gCTF = true;
 	}
+
 	// setup core world
 	//for(int i = 0; i < MAX_CLIENTS; i++)
 	//	game.players[i].core.world = &game.world.core;
