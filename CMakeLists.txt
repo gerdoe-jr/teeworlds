@@ -20,12 +20,12 @@ endif()
 if(POLICY CMP0048)
   cmake_policy(SET CMP0048 NEW)
   if(VERSION_PATCH STREQUAL "0")
-    project(teeworlds VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
+    project(anime_gctf VERSION ${VERSION_MAJOR}.${VERSION_MINOR})
   else()
-    project(teeworlds VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
+    project(anime_gctf VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
   endif()
 else()
-  project(teeworlds)
+  project(anime_gctf)
   set(PROJECT_VERSION_MAJOR ${VERSION_MAJOR})
   set(PROJECT_VERSION_MINOR ${VERSION_MINOR})
   set(PROJECT_VERSION_PATCH ${VERSION_PATCH})
@@ -253,7 +253,6 @@ if(NOT CMAKE_CROSSCOMPILING)
   find_package(PkgConfig)
 endif()
 find_package(ZLIB)
-find_package(Crypto)
 find_package(Freetype)
 find_package(Git)
 find_package(Pnglite)
@@ -277,7 +276,7 @@ if(TARGET_OS AND TARGET_OS STREQUAL "mac")
   find_program(HDIUTIL hdiutil)
 endif()
 
-message(STATUS "******** Teeworlds ********")
+message(STATUS "******** Anime gCTF ********")
 message(STATUS "Target OS: ${TARGET_OS} ${TARGET_BITS}bit")
 message(STATUS "Compiler: ${CMAKE_CXX_COMPILER}")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
@@ -302,7 +301,6 @@ show_dependency_status("Freetype" FREETYPE)
 if(TARGET_OS AND TARGET_OS STREQUAL "mac")
   show_dependency_status("Hdiutil" HDIUTIL)
 endif()
-show_dependency_status("OpenSSL Crypto" CRYPTO)
 show_dependency_status("Pnglite" PNGLITE)
 show_dependency_status("PythonInterp" PYTHONINTERP)
 show_dependency_status("SDL" SDL)
@@ -732,48 +730,9 @@ endif()
 ########################################################################
 
 # Sources
-set_glob(ENGINE_SERVER GLOB src/engine/server
-  register.cpp
-  register.h
-  server.cpp
-  server.h
-)
-set_glob(GAME_SERVER GLOB_RECURSE src/game/server
-  discord/bot.cpp
-  discord/bot.h
-  entities/character.cpp
-  entities/character.h
-  entities/flag.cpp
-  entities/flag.h
-  entities/laser.cpp
-  entities/laser.h
-  entities/pickup.cpp
-  entities/pickup.h
-  entities/projectile.cpp
-  entities/projectile.h
-  entity.cpp
-  entity.h
-  eventhandler.cpp
-  eventhandler.h
-  gamecontext.cpp
-  gamecontext.h
-  gamecontroller.cpp
-  gamecontroller.h
-  gamemodes/ctf.cpp
-  gamemodes/ctf.h
-  gamemodes/dm.cpp
-  gamemodes/dm.h
-  gamemodes/grenade.cpp
-  gamemodes/grenade.h
-  gamemodes/mod.cpp
-  gamemodes/mod.h
-  gamemodes/tdm.cpp
-  gamemodes/tdm.h
-  gameworld.cpp
-  gameworld.h
-  player.cpp
-  player.h
-)
+file(GLOB ENGINE_SERVER src/engine/server/*)
+file(GLOB_RECURSE GAME_SERVER src/game/server/*)
+
 set(GAME_GENERATED_SERVER
   "src/game/generated/server_data.cpp"
   "src/game/generated/server_data.h"
@@ -786,7 +745,7 @@ else()
 endif()
 
 # Libraries
-set(LIBS_SERVER ${LIBS} ${DPP_LIBRARIES} ${CRYPTO_LIBRARIES} ${OPENSSL_LIBRARIES})
+set(LIBS_SERVER ${LIBS} ${DPP_LIBRARIES})
 
 # Target
 set(TARGET_SERVER ${SERVER_EXECUTABLE})
@@ -1247,10 +1206,6 @@ foreach(target ${TARGETS_OWN})
   target_include_directories(${target} PRIVATE ${CURL_INCLUDE_DIRS})
   target_include_directories(${target} PRIVATE ${ZLIB_INCLUDE_DIRS})
   target_include_directories(${target} PRIVATE ${DPP_INCLUDE_DIRS})
-  if(CRYPTO_FOUND)
-    target_compile_definitions(${target} PRIVATE CONF_OPENSSL)
-    target_include_directories(${target} PRIVATE ${CRYPTO_INCLUDE_DIRS})
-  endif()
 endforeach()
 
 foreach(target ${TARGETS_DEP})

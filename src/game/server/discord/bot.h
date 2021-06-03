@@ -6,7 +6,7 @@
 
 class CDiscordBot {
 public:
-	CDiscordBot(CGamecontext* pGS);
+	CDiscordBot(CGameContext* pGS) {};
 private:
 	CGameContext* m_pGS;
 

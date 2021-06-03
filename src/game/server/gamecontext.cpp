@@ -15,6 +15,8 @@
 #include "gamemodes/mod.h"
 #include "gamemodes/grenade.h"
 
+#include "discord/bot.h"
+
 enum
 {
 	RESET,

@@ -64,10 +64,6 @@ if (WIN32)
 	set(ZLIB_INCLUDE_DIR "C:\\vcpkg\\installed\\x64-windows\\include")
 endif()
 
-aux_source_directory("src" coresrc)
-
-add_executable(test ${coresrc})
-
 string(ASCII 27 Esc)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -75,11 +71,7 @@ find_package(Threads REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(ZLIB REQUIRED)
 
-target_compile_features(test PRIVATE cxx_std_17)
-
 include_directories( "include" )
-
-target_link_libraries(test)
 
 find_package(Git QUIET)
 
@@ -122,7 +114,6 @@ endif()
 endforeach(fullmodname)
 
 target_compile_features(dpp PRIVATE cxx_std_17)
-target_link_libraries(test PUBLIC dpp)
 
 add_custom_command(TARGET dpp
 	COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/PostBuild.cmake)

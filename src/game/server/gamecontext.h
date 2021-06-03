@@ -75,7 +75,7 @@ public:
 	bool gCTF;
 	CDiscordBot* m_pBot;
 
-	CDiscordBot* Discord() const { return m_pDiscord; }
+	CDiscordBot* Discord() const { return m_pBot; }
 
 	IServer *Server() const { return m_pServer; }
 	class IConsole *Console() { return m_pConsole; }
